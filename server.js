@@ -16,10 +16,11 @@ const SECRET_KEY = 'your_super_secret_key';
 
 // -- MySQL-Verbindung einrichten --
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'maturaprojekt',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
 });
 
 db.connect((err) => {
@@ -352,7 +353,7 @@ app.post('/api/check-email', (req, res) => {
 });
 
 // -- SERVER STARTEN --
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server läuft auf Port ${PORT}`);
 });
