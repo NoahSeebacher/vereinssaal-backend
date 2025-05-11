@@ -15,14 +15,18 @@ app.use(cors());
 const SECRET_KEY = 'your_super_secret_key';
 
 // -- MySQL-Verbindung einrichten --
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
   database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
+/*
 db.connect((err) => {
   if (err) {
     console.error('❌ Datenbankverbindung fehlgeschlagen:', err.stack);
@@ -30,6 +34,8 @@ db.connect((err) => {
   }
   console.log('✅ Mit der Datenbank verbunden.');
 });
+
+*/
 
 const promiseDB = db.promise();
 
